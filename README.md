@@ -4,7 +4,7 @@ This repository contains a collection of exercises related to Operating Systems,
 # How to Use This Repository
 
 You can clone this repository to your computer using the following command:
-git clone https://github.com/your-username/repository-name.git
+ 1. Clone the repository: `git clone https://github.com/carminecoppola/OneTouch.git`
 
 
 # Contributing
