@@ -1,3 +1,10 @@
+/*
+    Scrivere un programma C che crei 5 Thread a cui vengono
+    passati tramite una struttura due parametri:
+        • Il numero del thread;
+        • Un messaggio;
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>

@@ -4,3 +4,5 @@
       poi incrementa una variabile globale intera ed infine ne stampa 
       il valore
 */
+
+
