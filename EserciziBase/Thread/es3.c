@@ -19,14 +19,17 @@ typedef struct parameter
     int occorrenza;  // Contatore delle occorrenze del carattere
 } parameters;
 
+
+//Funzione eseguita dai thread per contare le occorrenze del carattere specificato in una porzione di file.
 void *routine(void *args)
 {
-    parameters *data = (parameters *)args;
+    parameters *data = (parameters *)args; // Cast del puntatore args alla struttura parameters
 
     int occorrenza = 0;
 
-    fseek(data->file, data->p_file, SEEK_SET);  // Sposta il puntatore di posizione del file alla posizione di partenza del thread
+    fseek(data->file, data->p_file, SEEK_SET);  // Sposta il puntatore della posizione del file alla posizione di partenza del thread
 
+    // Andiamo a leggere i caratteri nella porzione di file assegnata al thread
     for (int i = 0; i < data->bytes; i++)
     {
         int f = fgetc(data->file);  // Legge un carattere dal file
@@ -40,6 +43,7 @@ void *routine(void *args)
     data->occorrenza = occorrenza;  // Salva il numero di occorrenze nel parametro del thread
     pthread_exit(NULL);
 }
+
 
 int main()
 {
@@ -55,6 +59,7 @@ int main()
 
     FILE *file = fopen(filename, "r");  // Apre il file in modalità lettura
 
+    //Se il file non esiste ritorniamo un errore
     if (file == NULL)
     {
         printf("Impossibile aprire il file.\n");
@@ -63,18 +68,18 @@ int main()
 
     int num_bytes;
 
-    fseek(file, 0, SEEK_END);  // Sposta il puntatore di posizione del file alla fine
+    /*La fseek() posiziona il puntatore di posizione alla fine, questo è fatto per ottenere
+      la posizione corrente del puntatore di posizione, che corrisponde alla dimensione totale del 
+      file in byte. Questo valore viene successivamente memorizzato nella variabile num_bytes.
+    */
+    fseek(file, 0, SEEK_END);
     num_bytes = ftell(file);   // Ottiene la posizione corrente del puntatore di posizione del file (la dimensione del file in byte)
-    fseek(file, 0, SEEK_SET);  // Sposta il puntatore di posizione del file all'inizio
-
-    if (num_bytes % n != 0)  // Calcola il numero di byte per ogni thread considerando eventuali byte rimanenti
-    {
+   
+   //Controllo che il numero di bytes sia divisibile per n
+    if (num_bytes % n != 0)
         num_bytes = (num_bytes / n + num_bytes % n);
-    }
     else
-    {
         num_bytes = num_bytes / n;
-    }
 
     pthread_t *threads = malloc(n * sizeof(pthread_t));  // Alloca memoria per gli identificatori dei thread
 
