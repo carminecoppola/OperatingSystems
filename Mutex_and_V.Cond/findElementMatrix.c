@@ -6,7 +6,6 @@
       (sono cancellati)
 */
 
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<pthread.h>
@@ -14,8 +13,8 @@
 
 #define DIM_M 4
 
-pthread_mutex_t myMutex = PTHREAD_MUTEX_INITIALIZER;
-int trovato = 0;
+pthread_mutex_t myMutex = PTHREAD_MUTEX_INITIALIZER; //Dichiaro il mio MUTEX
+int trovato = 0; //Mi servirà per indicare che l'elemento è stato trovato (Si portebbe fare con la Variabile di Condizione)
 
 int matrix[DIM_M][DIM_M]; // La dichiaro globale per comodità
 
