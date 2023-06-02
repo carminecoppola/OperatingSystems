@@ -8,19 +8,17 @@ To use the exercises, you need to have a properly configured C development envir
 
 1. Installation of GCC: GCC (GNU Compiler Collection) is a widely used C compiler. Check if GCC is already installed on your system by running the following command in a terminal window:
 
-gcc --version
-
+`gcc --version`
 
 If GCC is already installed, you should see the installed version. Otherwise, follow the appropriate instructions to install GCC on your operating system.
 
 2. Compiling the files: After cloning the repository to your computer, you can compile the C files using GCC. Make sure you are in the correct directory, then execute the following command to compile a sample C file called "exercise.c":
 
-gcc -o exercise exercise.c
+`gcc -o exercise exercise.c`
 
 This command will create an executable file named "exercise". To run the program, type:
 
-./exercise
-
+`./exercise`
 
 Make sure to adapt the compilation and execution commands to the specifications of your operating system.
 
