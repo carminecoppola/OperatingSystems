@@ -17,7 +17,6 @@ If GCC is already installed, you should see the installed version. Otherwise, fo
 
 gcc -o exercise exercise.c
 
-
 This command will create an executable file named "exercise". To run the program, type:
 
 ./exercise
