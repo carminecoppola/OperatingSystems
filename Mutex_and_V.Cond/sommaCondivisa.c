@@ -50,9 +50,9 @@ void *somma1(void *arg) {
         // Acquisisce il mutex per garantire l'accesso esclusivo alle variabili condivise
         pthread_mutex_lock(&(puntatore->myMutex));
         
-        // Incrementa le variabili test_a e test_b all'interno del blocco protetto dal mutex
-        puntatore->test_a++;
-        puntatore->test_b++;
+            // Incrementa le variabili test_a e test_b all'interno del blocco protetto dal mutex
+            puntatore->test_a++;
+            puntatore->test_b++;
         
         // Rilascia il mutex per permettere ad altri thread di accedere alle variabili condivise
         pthread_mutex_unlock(&(puntatore->myMutex));
@@ -76,9 +76,9 @@ void *somma2(void *arg) {
         // Acquisisce il mutex per garantire l'accesso esclusivo alle variabili condivise
         pthread_mutex_lock(&(puntatore->myMutex));
         
-        // Incrementa le variabili test_a e test_b all'interno del blocco protetto dal mutex
-        puntatore->test_a++;
-        puntatore->test_b++;
+            // Incrementa le variabili test_a e test_b all'interno del blocco protetto dal mutex
+            puntatore->test_a++;
+            puntatore->test_b++;
         
         // Rilascia il mutex per permettere ad altri thread di accedere alle variabili condivise
         pthread_mutex_unlock(&(puntatore->myMutex));
