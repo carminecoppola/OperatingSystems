@@ -67,22 +67,25 @@ void *routinePrelievo(void *arg)
 
     for (int i = threadId; i < n; i ++)
     {
+        pthread_mutex_lock(&myMutex);
+        if (contElement >= (n + 1) / 2) {
+            pthread_cond_signal(&vettoreRiempito);
+        }
+        pthread_mutex_unlock(&myMutex);
+
         for (int j = 0; j < n; j++)
         {
             if(contElement < (n + 1)/2){
                 pthread_mutex_lock(&myMutex);      // Acquisizione del mutex per la sincronizzazione
                     vettore[contElement] = matrix[i][j];   // Inserimento dell'elemento nel vettore
+                    printf("Thread %d: Inserito elemento %d nella riga %d, colonna %d\n", threadId, vettore[contElement], i, j);
                     contElement++;                  // Incremento del contatore degli elementi inseriti
                 pthread_mutex_unlock(&myMutex);    // Rilascio del mutex
             }
         }
     }
 
-    pthread_mutex_lock(&myMutex);
-        if (contElement >= (n + 1) / 2) {
-            pthread_cond_signal(&vettoreRiempito);
-        }
-    pthread_mutex_unlock(&myMutex);
+    
 
     pthread_exit(NULL);
 }
@@ -112,6 +115,12 @@ int main(int argc, char *argv[])
 
     n = atoi(argv[1]);          // Dimensione della matrice passata come argomento da riga di comando
 
+    if (n % 2 != 0)
+    {
+        printf("\n N non è pari\n\n");
+        exit(0);
+    }    
+
     allocaMatrix();             // Allocazione della matrice
     generaMatrix();             // Generazione casuale degli elementi della matrice
 
@@ -125,12 +134,18 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < n; i++)
     {
-        threadIds[i] = i;
+        threadIds[i] = rand() % n;  // Genera un indice casuale per la riga
         if (pthread_create(&th[i], NULL, routinePrelievo, &threadIds[i]) != 0)
         {
             printf("\nErrore nella creazione dei thread");       // Creazione dei thread per la routine di prelievo
             return -1;
         }
+    }
+
+     if (pthread_create(&printTh, NULL, routineStampa, NULL) != 0)
+    {
+        printf("\nErrore nella creazione del thread di stampa");   // Creazione del thread per la routine di stampa
+        return -1;
     }
 
     for (int i = 0; i < n; i++)
@@ -140,12 +155,6 @@ int main(int argc, char *argv[])
             printf("\nErrore nella fase di JOIN dei thread");     // Join dei thread per attendere la loro terminazione
             return -2;
         }
-    }
-
-    if (pthread_create(&printTh, NULL, routineStampa, NULL) != 0)
-    {
-        printf("\nErrore nella creazione del thread di stampa");   // Creazione del thread per la routine di stampa
-        return -1;
     }
 
     if (pthread_join(printTh, NULL) != 0)
