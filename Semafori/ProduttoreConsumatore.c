@@ -15,6 +15,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <time.h>
+#include<unistd.h>
 
 #define N 5
 
